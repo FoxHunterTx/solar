@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="en">
+ <head>
+    <link type="text/css" rel="stylesheet" href="{{url_for('static',filename='css/style.css')}}"/>
+    <title>Battery Calculation</title>
+    <script>
+    </script>
+ </head>
+<body onload="initialize()">
+ <h1>Battery Capacity Calculation</h1>
+<p>Question: What battery capacity is needed when I run a device behind the DC/AC inverter with xzy Watt? <br>The below calculator will help you to determine the battery capacity you need. It is only an approximate value.<br>
+As the battery capacity is calculated for a current over 20 hours you might think that battery has always the AmpereHours (Ah) printed on the battery. That is not true. The more current your device is drawing from the battery the lower the AmpereHour (Ah). <br>Example: You own a 35Ah battery. The battery can provide 35h over 20 hours when you draw a current of I=1.75A. But if you draw a current of I=19.75A for one hour - your battery can only provide 21 AmpereHour (Ah). That is a physical behavior of current 12 Volt batteries. Thus, you try adjust the battery bank capacity or lower the drawn current.</p><br>
+Note: Please check the battery datasheet of your battery/batteries in order to understand the impact to your battery/batteries.<br>
+<form action="/calculate" method="POST">
+  <label>Your expected Wattage use in W: </label>
+  <input type="number" name="wattVac" id="warravc"><br>
+  <label>Your battery capacity in Ah:</label>
+  <input type="number" name="batteryCap" id="batterycap"><br>
+   <input type="radio" name="voltageVac" value="120" checked>120 [US]<br>
+   <input type="radio" name="voltageVac" value="240">240 [EU]<br>
+  <input type="submit" value="Submit" /><br>
+</form>
+<br><br>
+<table>
+  <tr>
+   <th colspan="2">120 VAC</th>
+ </tr>
+ <tr>
+   <th>Item</th>
+   <th>Output</th>
+ </tr>
+ <tr>
+  <td>Wattage AC [P~]:</td>
+  <td>{{power}}</td>
+ </tr>
+ <tr>
+  <td>Volatge VAC [V~]:</td>
+  <td>{{voltage}}</td>
+ </tr>
+ <tr>
+  <td>Current AC [A~]:</td>
+  <td>{{ampere}}</td>
+ </tr>
+</table>
+<p>1. The power consumption on the alternating voltage/current side is also drawn on the direct voltage/current side. As an inverter is used to tranform the DC voltage to AC voltage as lost factor of the inverter has to be added in order produce the requested AC power. As default, the calculation below using an inverter lost of 0.85%</</p><br>
+<p>2. The Sealed Lead Acid batteries should not be discharged under 20% of their entire battery capacity (Ah written on the battery). Hence, added it to the calculation.
+</p><br>
+<table>
+  <tr>
+   <th colspan="2">12 Volt DC</th>
+ </tr>
+ <tr>
+   <th>Item</th>
+   <th>Output</th>
+ </tr>
+ <tr>
+  <td>Battery Capacity DC [Ah]:</td>
+  <td>{{battcap}}</td>
+ </tr>
+ <tr>
+  <td>Wattage drawn from battery DC [P-]:</td>
+  <td>{{powerdc}}</td>
+ </tr>
+ <tr>
+  <td>Current drawn from battery DC [A-]:</td>
+  <td>{{currentdc}}</td>
+ </tr>
+ <tr>
+  <td>Capacity of battery (+80%) DC [Ah]:</td>
+  <td>{{battcap80}}</td>
+ </tr>
+ <tr>
+  <td>Time for drawing current(+80%) DC [A]:</td>
+  <td>{{time80}}</td>
+ </tr>
+ <tr>
+  <td>Recommended time for drawing high current DC [A]:</td>
+  <td>{{timeHighAmp}}</td>
+ </tr>
+</table>
+<script> 
+var t1 ="{{alert}}"
+if(t1 == 1){
+ alert("The recommended time to use that Power is test:{{ampere}}  - {{timeHighAmp}}")
+}; </script>
+</body>
+</html>
+
+
