@@ -13,7 +13,7 @@ def get_current_ac(data=None):
 
 print "test"
 
-testdic ={'Watt':"",'Volt':"4"}
+testdic ={'Watt':"",'Volt':"4",'battCap':"35"}
 tmp1 = get_current_ac(testdic)
 print tmp1
 
